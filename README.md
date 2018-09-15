@@ -1,0 +1,2 @@
+# LazyIr-Browser
+browser extension
