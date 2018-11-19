@@ -69,6 +69,8 @@ var onerror = function(error) {
     }
 };
 
+
+// receive message from server
 var onmg = function(event) {
     var incomingMessage = event.data;
     parseResponse(incomingMessage);
@@ -142,59 +144,44 @@ function init() {
     setCheckServerInterval();
 }
 
+// parse message, receive from server
 function parseResponse(data)
  {
-     console.log(data);
-     var json = JSON.parse(data);
-
-     console.log(json);
-     if(json.multipleVids === "true"){
-       var locId = json.lazyIrId;
-         var arrayLength = MultipleVideos.length;
-         for (var i = 0; i < arrayLength; i++) {
-             console.log("======");
-             console.log(MultipleVideos[i].lazyIrId);
-             console.log(locId);
-             console.log("======");
-             if( MultipleVideos[i].lazyIrId == locId){
-                 MyJasechvideo  = MultipleVideos[i];
-                 console.log("!!!" + MyJasechvideo.lazyIrId);
+     var networkPackage = JSON.parse(data);
+     console.log(networkPackage);
+     if(networkPackage.type === "Web") {
+         var json = networkPackage.data;
+         var playerId = json.jsId;
+         for (var i = 0; i < MultipleVideos.length; i++) {
+             if (MultipleVideos[i].lazyIrId == locId) {
+                 MyJasechvideo = MultipleVideos[i];
                  break;
              }
          }
-     }
 
-     if(json.command === "pause")
-     {
-         pause();
-     }
-     else if(json.command === "play")
-     {
-         play();
-     }
-     else if(json.command === "playPause")
-     {
-         playPause();
-     }
-     else if(json.command === "setTime")
-     {
-         setTime(json.time);
-     }
-     else if(json.command === "setVolume")
-     {
-         setVolume(json.volume);
-     }
-     else if(json.command === "getInfo")
-     {
-         sendInfo();
-     }
-     else if(json.command === "next")
-     {
-         sendNext();
-     }
-     else if(json.command === "loop")
-     {
-         loop();
+         if (json.command === "pause") {
+             pause();
+         } else if (json.command === "play") {
+             play();
+         }
+         else if (json.command === "playPause") {
+             playPause();
+         }
+         else if (json.command === "setTime") {
+             setTime(json.dValue);
+         }
+         else if (json.command === "setVolume") {
+             setVolume(json.dValue);
+         }
+         else if (json.command === "getInfo") {
+             sendInfo();
+         }
+         else if (json.command === "next") {
+             sendNext();
+         }
+         else if (json.command === "loop") {
+             loop();
+         }
      }
  }
 
@@ -248,38 +235,37 @@ function sendNext() {
     if(arrayLength === 1) {
         if(MyJasechvideo.lazyIrId === undefined || MyJasechvideo.lazyIrId === null || MyJasechvideo.lazyIrId === 0)
         MyJasechvideo.lazyIrId = Math.random() * (999999 - 1) + 1;
-        var obj = {
-            "type": "getInfo",
-            "title": getTitle(),
-            "status": getStatus(),
-            "time": getTime(),
-            "duration": getDuration(),
-            "volume": getVolume(),
-            "url": getPageUrl(),
-            "videoSrc": getVideoSrc(),
-            "localId": MyJasechvideo.lazyIrId
-        };
+        mprisDto.jsId =   MyJasechvideo.lazyIrId;
+        mprisDto.players[0].currTime =  getTime();
+        mprisDto.players[0].title = getTitle();
+        mprisDto.players[0].name = getTitle();
+        mprisDto.players[0].status = getStatus();
+        mprisDto.players[0].length = getDuration();
+        mprisDto.players[0].volume = getVolume();
+        mprisDto.players[0].id = MyJasechvideo.lazyIrId;
+        mprisDto.players[0].url = getPageUrl();
+        mprisDto.players[0].ip = getVideoSrc();
+
     }else{
-        var obj = {
-            "type": "getInfoMultiple",
-            "numberOfVideos":arrayLength
-        }
         for (var i = 0; i < arrayLength; i++) {
             MyJasechvideo = MultipleVideos[i];
             if(MyJasechvideo.lazyIrId === undefined || MyJasechvideo.lazyIrId === null || MyJasechvideo.lazyIrId === 0)
             MyJasechvideo.lazyIrId = Math.random() * (999999 - 1) + 1;
-            obj["localId"+i] = MyJasechvideo.lazyIrId;
-            obj["title"+i] = getTitle();
-            obj["status"+i] = getStatus();
-            obj["time"+i] = getTime();
-            obj["duration"+i] = getDuration();
-            obj["volume"+i] = getVolume();
-            obj["url"+i] = getPageUrl();
-            obj["videoSrc"+i] = getVideoSrc();
+            mprisDto.jsId =   MyJasechvideo.lazyIrId;
+            mprisDto.players[i].currTime =  getTime();
+            mprisDto.players[i].title = getTitle();
+            mprisDto.players[i].name = getTitle();
+            mprisDto.players[i].status = getStatus();
+            mprisDto.players[i].length = getDuration();
+            mprisDto.players[i].volume = getVolume();
+            mprisDto.players[i].id = MyJasechvideo.lazyIrId;
+            mprisDto.players[i].url = getPageUrl();
+            mprisDto.players[i].ip = getVideoSrc();
         }
         MyJasechvideo = MultipleVideos[0];
     }
-     var myJSON = JSON.stringify(obj);
+    NetworkPackage.data = mprisDto;
+     var myJSON = JSON.stringify(NetworkPackage);
      sendMessage(myJSON);
  }
 
@@ -359,4 +345,37 @@ function youtubePageChange()
         init();
     });
 }
+
+var NetworkPackage ={
+    id : "",
+    name : "",
+    deviceType : "",
+    type : "",
+    isModule : false,
+    data : null
+}
+
+
+var mprisDto = {
+    command : "",
+    player: "",
+    jsIp: "",
+    jsId: "",
+    playerType : "",
+    value: "",
+    dValue: 0,
+    players: [
+        {
+            name: "",
+            status: "",
+            title: "",
+            length: 0,
+            volume: 0,
+            currTime: 0,
+            id: "",
+            url: "",
+            ip: ""
+        }
+    ]
+};
 

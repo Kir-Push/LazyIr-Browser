@@ -1,17 +1,12 @@
 
 
-
-var video;
-var count = 0;
 var dict = {};
 var dictping = {};
 var intervalId;
 var intervalCount = 10000;
-//var port = chrome.runtime.connect();
-var text;
+
 
 LazyIrBackgroundInit();
-
 
 
 function LazyIrBackgroundInit() {
@@ -25,7 +20,6 @@ function LazyIrBackgroundInit() {
                     dict[sender.tab.id].close();
                     dict[sender.tab.id] = undefined;
                 } else if (request.message === "ping") {
-                    console.log("RECEIVE PING!");
                     if(dictping[sender.tab.id] !== undefined) {
                         dictping[sender.tab.id] = true;
                     }
@@ -40,14 +34,12 @@ function LazyIrBackgroundInit() {
         for (var key in dictping) {
             // check if the property/key is defined in the object itself, not in parent
             if (dictping.hasOwnProperty(key)) {
-                console.log(key, dictping[key]);
                 if(dictping[key] === false){
                     if (dict[key] !== undefined) {
                         dict[key].close();
                         dict[key] = undefined;
                         delete dict[key];
                     }
-                    console.log("IN PING CLOSE");
                         dictping[key] = undefined;
                        delete dictping[key];
                 }
@@ -62,7 +54,6 @@ function LazyIrBackgroundInit() {
 
 function tryConnect(sender) {
      if(dict[sender.tab.id] !== undefined){
-         console.log("CLOSE SOCKET");
         dict[sender.tab.id].close();
         dict[sender.tab.id] = undefined;
     }
