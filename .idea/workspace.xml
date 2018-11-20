@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c1002b9a-3896-4652-b3bc-85edd82bbe07" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/browser/extension/chrome/background.js" beforeDir="false" afterPath="$PROJECT_DIR$/browser/extension/chrome/background.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/browser/extension/chrome/popup.js" beforeDir="false" afterPath="$PROJECT_DIR$/browser/extension/chrome/popup.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -21,8 +20,8 @@
       <file leaf-file-name="popup.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/browser/extension/chrome/popup.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="248" column="10" selection-start-line="248" selection-start-column="10" selection-end-line="248" selection-end-column="10" />
+            <state relative-caret-position="530">
+              <caret line="154" column="44" selection-start-line="154" selection-start-column="44" selection-end-line="155" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -30,7 +29,7 @@
       <file leaf-file-name="background.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/browser/extension/chrome/background.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-916">
+            <state relative-caret-position="200">
               <caret line="10" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
@@ -76,7 +75,7 @@
     <option name="x" value="1274" />
     <option name="y" value="26" />
     <option name="width" value="1286" />
-    <option name="height" value="1330" />
+    <option name="height" value="1324" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -162,18 +161,26 @@
       <workItem from="1540944495079" duration="3000" />
       <workItem from="1542458607810" duration="639000" />
       <workItem from="1542646980865" duration="1005000" />
-      <workItem from="1542648531729" duration="2260000" />
+      <workItem from="1542648531729" duration="2300000" />
+      <workItem from="1542737112286" duration="2346000" />
     </task>
+    <task id="LOCAL-00001" summary="chrome extension move to networkPackage dto">
+      <created>1542650907659</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1542650907660</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19546000" />
+    <option name="totallyTimeSpent" value="21932000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1274" y="26" width="1286" height="1330" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info anchor="bottom" id="TypeScript" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.27080062" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
@@ -188,6 +195,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TypeScript" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -199,7 +207,25 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="chrome extension move to networkPackage dto" />
+    <option name="LAST_COMMIT_MESSAGE" value="chrome extension move to networkPackage dto" />
+  </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/browser/extension/chrome/popup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4960">
+          <caret line="248" column="10" selection-start-line="248" selection-start-column="10" selection-end-line="248" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/browser/extension/chrome/background.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/browser/extension/chrome/popup.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7360">
@@ -354,15 +380,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/browser/extension/chrome/background.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-916">
+        <state relative-caret-position="200">
           <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/browser/extension/chrome/popup.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="248" column="10" selection-start-line="248" selection-start-column="10" selection-end-line="248" selection-end-column="10" />
+        <state relative-caret-position="530">
+          <caret line="154" column="44" selection-start-line="154" selection-start-column="44" selection-end-line="155" selection-end-column="44" />
         </state>
       </provider>
     </entry>

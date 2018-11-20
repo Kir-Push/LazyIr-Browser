@@ -147,40 +147,41 @@ function init() {
 // parse message, receive from server
 function parseResponse(data)
  {
+     console.log(data);
      var networkPackage = JSON.parse(data);
-     console.log(networkPackage);
-     if(networkPackage.type === "Web") {
-         var json = networkPackage.data;
-         var playerId = json.jsId;
-         for (var i = 0; i < MultipleVideos.length; i++) {
-             if (MultipleVideos[i].lazyIrId == locId) {
-                 MyJasechvideo = MultipleVideos[i];
-                 break;
+     if (networkPackage.command === "getInfo") {
+         sendInfo();
+     }  else {
+         if (networkPackage.type === "Web") {
+             var json = networkPackage.data;
+             var playerId = json.jsId;
+             for (var i = 0; i < MultipleVideos.length; i++) {
+                 if (MultipleVideos[i].lazyIrId == playerId) {
+                     MyJasechvideo = MultipleVideos[i];
+                     break;
+                 }
              }
-         }
 
-         if (json.command === "pause") {
-             pause();
-         } else if (json.command === "play") {
-             play();
-         }
-         else if (json.command === "playPause") {
-             playPause();
-         }
-         else if (json.command === "setTime") {
-             setTime(json.dValue);
-         }
-         else if (json.command === "setVolume") {
-             setVolume(json.dValue);
-         }
-         else if (json.command === "getInfo") {
-             sendInfo();
-         }
-         else if (json.command === "next") {
-             sendNext();
-         }
-         else if (json.command === "loop") {
-             loop();
+             if (json.command === "pause") {
+                 pause();
+             } else if (json.command === "play") {
+                 play();
+             }
+             else if (json.command === "playPause") {
+                 playPause();
+             }
+             else if (json.command === "setTime") {
+                 setTime(json.dValue);
+             }
+             else if (json.command === "setVolume") {
+                 setVolume(json.dValue);
+             }
+             else if (json.command === "next") {
+                 sendNext();
+             }
+             else if (json.command === "loop") {
+                 loop();
+             }
          }
      }
  }
@@ -364,6 +365,8 @@ var mprisDto = {
     playerType : "",
     value: "",
     dValue: 0,
+    className : "Mpris",
+    isModule : true,
     players: [
         {
             name: "",
