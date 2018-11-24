@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c1002b9a-3896-4652-b3bc-85edd82bbe07" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/browser/extension/chrome/spotify.js" afterDir="false" />
+    <list default="true" id="c1002b9a-3896-4652-b3bc-85edd82bbe07" name="Default" comment="add spotify web support">
+      <change afterPath="$PROJECT_DIR$/browser/extension/chrome/phone.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/browser/extension/chrome/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/browser/extension/chrome/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/browser/extension/chrome/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/browser/extension/chrome/popup.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/browser/extension/chrome/popup.js" beforeDir="false" afterPath="$PROJECT_DIR$/browser/extension/chrome/popup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/browser/extension/chrome/socket.io.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/browser/extension/chrome/socket.io.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/browser/extension/chrome/spotify.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,26 +26,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/browser/extension/chrome/popup.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="684">
-              <caret line="47" column="93" selection-start-line="47" selection-start-column="93" selection-end-line="47" selection-end-column="93" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/browser/extension/chrome/spotify.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="883">
-              <caret line="86" column="1" lean-forward="true" selection-end-line="86" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/browser/extension/chrome/manifest.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
+            <state relative-caret-position="163">
+              <caret line="121" column="36" selection-start-line="121" selection-start-column="36" selection-end-line="121" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -47,8 +35,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/browser/extension/chrome/background.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="30">
               <caret line="10" selection-start-line="10" selection-end-line="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/browser/extension/chrome/manifest.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -68,11 +65,12 @@
       <find>text</find>
       <find>intervalCount</find>
       <find>lazyIrId</find>
-      <find>console</find>
       <find>current</find>
       <find>push</find>
       <find>sendInf</find>
       <find>next</find>
+      <find>console</find>
+      <find>getTi</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -83,8 +81,8 @@
       <list>
         <option value="$PROJECT_DIR$/browser/extension/chrome/background.js" />
         <option value="$PROJECT_DIR$/browser/extension/chrome/strategies/spotify.js" />
-        <option value="$PROJECT_DIR$/browser/extension/chrome/manifest.json" />
         <option value="$PROJECT_DIR$/browser/extension/chrome/popup.js" />
+        <option value="$PROJECT_DIR$/browser/extension/chrome/manifest.json" />
       </list>
     </option>
   </component>
@@ -106,7 +104,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -132,18 +129,11 @@
               <item name="extension" type="462c0819:PsiDirectoryNode" />
               <item name="chrome" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="lazyIr-Browser" type="b2602c69:ProjectViewProjectNode" />
-              <item name="lazyIr-Browser" type="462c0819:PsiDirectoryNode" />
-              <item name="browser" type="462c0819:PsiDirectoryNode" />
-              <item name="extension" type="462c0819:PsiDirectoryNode" />
-              <item name="chrome" type="462c0819:PsiDirectoryNode" />
-              <item name="socket.io.js" type="620a8d5e:NestingTreeNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -152,6 +142,9 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/browser/extension/chrome" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/browser/extension/chrome" />
     </key>
@@ -196,7 +189,8 @@
       <workItem from="1543046423616" duration="7056000" />
       <workItem from="1543061966469" duration="243000" />
       <workItem from="1543062973802" duration="16000" />
-      <workItem from="1543063048034" duration="5269000" />
+      <workItem from="1543063048034" duration="11861000" />
+      <workItem from="1543089634470" duration="3047000" />
     </task>
     <task id="LOCAL-00001" summary="chrome extension move to networkPackage dto">
       <created>1542650907659</created>
@@ -212,11 +206,18 @@
       <option name="project" value="LOCAL" />
       <updated>1542741768539</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add spotify web support">
+      <created>1543068378635</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1543068378635</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35300000" />
+    <option name="totallyTimeSpent" value="44939000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="26" width="2560" height="1330" extended-state="6" />
@@ -247,17 +248,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="chrome extension move to networkPackage dto" />
-    <option name="LAST_COMMIT_MESSAGE" value="chrome extension move to networkPackage dto" />
+    <MESSAGE value="add spotify web support" />
+    <option name="LAST_COMMIT_MESSAGE" value="add spotify web support" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/browser/extension/chrome/socket.io.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/browser/extension/chrome/popup.html">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/browser/extension/chrome/icon.png">
-      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/browser/extension/chrome/jquery.min.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -273,31 +269,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/browser/extension/chrome/background.js">
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="30">
+          <caret line="10716" column="13" selection-start-line="10716" selection-start-column="13" selection-end-line="10716" selection-end-column="13" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/browser/extension/chrome/icon.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/browser/extension/chrome/spotify.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="883">
-          <caret line="86" column="1" lean-forward="true" selection-end-line="86" selection-end-column="1" />
+        <state relative-caret-position="1273">
+          <caret line="69" column="43" lean-forward="true" selection-start-line="69" selection-start-column="43" selection-end-line="69" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/browser/extension/chrome/manifest.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
+        <state relative-caret-position="330">
+          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/browser/extension/chrome/socket.io.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="1" column="70" lean-forward="true" selection-start-line="1" selection-start-column="68" selection-end-line="1" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/browser/extension/chrome/background.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/browser/extension/chrome/popup.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="684">
-          <caret line="47" column="93" selection-start-line="47" selection-start-column="93" selection-end-line="47" selection-end-column="93" />
+        <state relative-caret-position="163">
+          <caret line="121" column="36" selection-start-line="121" selection-start-column="36" selection-end-line="121" selection-end-column="36" />
         </state>
       </provider>
     </entry>

@@ -83,7 +83,106 @@ class spotify{
     }
     setVolume(vol){
     }
+}
 
+class vk{
+    sendInfo(mprisDto){
+        mprisDto.jsId = "vkId";
+        mprisDto.players[0].currTime = this.getTime();
+        mprisDto.players[0].title = this.getTitle();
+        mprisDto.players[0].name = this.getTitle();
+        mprisDto.players[0].status =this.getStatus();
+        mprisDto.players[0].length = this.getDuration();
+        mprisDto.players[0].currTime = this.getTime();
+        mprisDto.players[0].volume = this.getVolume();
+        mprisDto.players[0].id = "vkId";
+        mprisDto.players[0].url = this.getPageUrl();
+        mprisDto.players[0].ip = this.getVideoSrc();
+        return mprisDto;
+    }
+
+    getTitle(){
+        var elem = document.getElementsByClassName("top_audio_player_title_wrap")[0];
+        if(elem === undefined){
+            elem = document.getElementsByClassName("audio_page_player_title_song_title")[0];
+            return elem.innerHTML;
+        } else {
+            return elem.firstElementChild.innerHTML;
+        }
+    }
+
+    getTime(){
+        var elem = document.getElementsByClassName("audio_page_player_duration")[0];
+        if(elem !== undefined) {
+            var textTime = elem.textContent;
+            var resultTimeinSecs = 0;
+            var split = textTime.split(":");
+            resultTimeinSecs += parseInt(split[0],10) * 60;
+            resultTimeinSecs += parseInt(split[1],10);
+            return resultTimeinSecs;
+        } else {
+            return 0;
+        }
+    }
+
+    getDuration(){
+    return this.getTime();
+    }
+
+    getStatus(){
+        if(document.getElementsByClassName("top_audio_player top_audio_player_enabled top_audio_player_playing").length > 0){
+            return "Playing";
+        }else {
+            return "Paused"
+        }
+    }
+
+    getVolume(){
+        var elem = document.getElementsByClassName("slider_amount")[0];
+        if(elem !== undefined) {
+            var volumeText = elem.style.cssText;
+            var number = parseFloat(volumeText.match(/[\d\.]+/));
+            return Math.floor(number);
+        }
+        return 0;
+    }
+
+    getPageUrl(){
+        return window.location.href;
+    }
+
+    getVideoSrc(){
+        return window.location.href;
+    }
+
+    pause(){
+        document.getElementsByClassName("top_audio_player_btn top_audio_player_play _top_audio_player_play")[0].click();
+    }
+
+    play(){
+        document.getElementsByClassName("top_audio_player_btn top_audio_player_play _top_audio_player_play")[0].click();
+    }
+
+    playPause(){
+        if(this.getStatus() === "Playing"){
+            this.pause();
+        }else{
+            this.play();
+        }
+    }
+    sendNext(){
+        document.getElementsByClassName("top_audio_player_btn top_audio_player_next")[0].click();
+    }
+    loop(){
+        var elem =  document.getElementsByClassName("audio_page_player_btn audio_page_player_repeat _audio_page_player_repeat")[0];
+        if(elem !== undefined) {
+            elem.click();
+        }
+    }
+    setTime(sec){
+    }
+    setVolume(vol){
+    }
 }
 
 var MyJasechvideo;
@@ -100,6 +199,7 @@ var setted;
 
 var strategies = new Object();
 strategies['open.spotify.com'] = new spotify();
+strategies['vk.com'] = new vk();
 var curStrategie;
 
 function setCheckServerInterval() {
