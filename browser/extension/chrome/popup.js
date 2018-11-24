@@ -1,16 +1,106 @@
 
+class spotify{
+    sendInfo(mprisDto){
+        mprisDto.jsId = "spotifyId";
+        mprisDto.players[0].currTime = this.getTime();
+        mprisDto.players[0].title = this.getTitle();
+        mprisDto.players[0].name = this.getTitle();
+        mprisDto.players[0].status =this.getStatus();
+        mprisDto.players[0].length = this.getDuration();
+        mprisDto.players[0].volume = this.getVolume();
+        mprisDto.players[0].id = "spotifyId";
+        mprisDto.players[0].url = this.getPageUrl();
+        mprisDto.players[0].ip = this.getVideoSrc();
+        return mprisDto;
+    }
+
+    getTime(){
+        var textTime = document.getElementsByClassName("playback-bar__progress-time")[0].innerHTML;
+        var resultTimeinSecs = 0;
+        var split = textTime.split(":");
+        resultTimeinSecs += parseInt(split[0],10) * 60;
+        resultTimeinSecs += parseInt(split[1],10);
+        return resultTimeinSecs;
+    }
+
+    getTitle(){
+        return document.title;
+    }
+
+    getStatus(){
+        if(document.getElementsByClassName("control-button spoticon-pause-16 control-button--circled").length > 0){
+            return "Playing";
+        }else{
+            return "Paused"
+        }
+    }
+
+    getDuration(){
+        var textTime = document.getElementsByClassName("playback-bar__progress-time")[1].innerHTML;
+        var resultTimeinSecs = 0;
+        var split = textTime.split(":");
+        resultTimeinSecs += parseInt(split[0],10) * 60;
+        resultTimeinSecs += parseInt(split[1],10);
+        return resultTimeinSecs;
+    }
+
+    getVolume(){
+        var volumeText = document.getElementsByClassName("progress-bar__fg")[1].style.cssText;
+        var number = parseFloat(volumeText.match(/[\d\.]+/));
+        return Math.floor(number);
+    }
+
+    getPageUrl(){
+        return window.location.href;
+    }
+
+    getVideoSrc(){
+        return document.getElementsByClassName("react-contextmenu-wrapper")[0].getElementsByTagName("a")[0].href;
+    }
+
+    pause(){
+        document.getElementsByClassName("control-button spoticon-pause-16 control-button--circled")[0].click();
+    }
+
+    play(){
+        document.getElementsByClassName("control-button spoticon-play-16 control-button--circled")[0].click();
+    }
+
+    playPause(){
+        if(this.getStatus() === "Playing"){
+            this.pause();
+        }else{
+            this.play();
+        }
+    }
+    sendNext(){
+        document.getElementsByClassName("control-button spoticon-skip-forward-16")[0].click();
+    }
+    loop(){
+        document.getElementsByClassName("control-button spoticon-repeat-16")[0].click();
+    }
+    setTime(sec){
+    }
+    setVolume(vol){
+    }
+
+}
+
 var MyJasechvideo;
 var MultipleVideos;
 var isSingleVideo;
-var JAsechCount = 0;
 var jasechResponse = false;
-var jasechInterval = 5000; // 1000 is one second;
+var jasechInterval = 5000; // 5 seconds;
 var workthroughbackhround = false;;
 var backgroundFailed;
 var jasechIntervalId;
 var pingId;
 var pingInterval = 1000;
 var setted;
+
+var strategies = new Object();
+strategies['open.spotify.com'] = new spotify();
+var curStrategie;
 
 function setCheckServerInterval() {
     if(jasechResponse === true)
@@ -77,7 +167,6 @@ var onmg = function(event) {
 };
 
 var sendMessage = function (msg) {
-    console.log(workthroughbackhround + "  " + jasechResponse + "    " + jasechsocket);
     if(workthroughbackhround !== true && jasechResponse === true && jasechsocket !== undefined) {
         jasechsocket.send(msg);
     }
@@ -122,22 +211,29 @@ function checkServer() {
             MultipleVideos.push(tempMultipleAudios[i]);
         }
     }
-    if(MultipleVideos.length === 0)
-        return;
+    // if(MultipleVideos.length === 0)
+    //     return;
 
-    if(MyJasechvideo === undefined) {
+    if(MyJasechvideo === undefined && MultipleVideos.length > 0) {
         MyJasechvideo = MultipleVideos[0];
     }
 
-    if(MyJasechvideo !== undefined)
-    {
+    if(MyJasechvideo !== undefined) {
         connectingPeople();
+    }else{
+       var keys = Object.keys(strategies);
+       for(var i = 0;i<keys.length;i++){
+         if(keys[i] === window.location.hostname){
+             curStrategie = strategies[keys[i]];
+             connectingPeople();
+             break;
+         }
+       }
+
     }
 }
 
-
 init();
-//$(youtubePageChange);
 
 function init() {
     checkServer();
@@ -147,7 +243,6 @@ function init() {
 // parse message, receive from server
 function parseResponse(data)
  {
-     console.log(data);
      var networkPackage = JSON.parse(data);
      if (networkPackage.command === "getInfo") {
          sendInfo();
@@ -187,83 +282,116 @@ function parseResponse(data)
  }
 
 function loop() {
-    if (typeof MyJasechvideo.loop == 'boolean') { // loop supported
-        MyJasechvideo.loop = true;
-    } else { // loop property not supported
-        MyJasechvideo.addEventListener('ended', function () {
-            this.currentTime = 0;
-            this.play();
-        }, false);
+    if(curStrategie !== undefined){
+        curStrategie.loop();
+    }else {
+        if (typeof MyJasechvideo.loop == 'boolean') { // loop supported
+            MyJasechvideo.loop = true;
+        } else { // loop property not supported
+            MyJasechvideo.addEventListener('ended', function () {
+                this.currentTime = 0;
+                this.play();
+            }, false);
+        }
+    }
+}
+function playPause() {
+    if(curStrategie !== undefined){
+        curStrategie.playPause();
+    }else {
+        var status = getStatus();
+        if (status === "playing") {
+            pause();
+        } else {
+            play();
+        }
     }
 }
 
-
- function sendStatus() {
-
- }
-
-
- function sendDuration() {
-
- }
-
-
- function sendTime() {
-
- }
-
-function playPause() {
-   var status = getStatus();
-   if(status === "playing")
-   {
-       pause();
-   }
-   else
-   {
-       play();
-   }
-}
-
-
 function sendNext() {
-    MyJasechvideo.currentTime = getDuration();
-
+    if(curStrategie !== undefined){
+        curStrategie.sendNext();
+    }else {
+        MyJasechvideo.currentTime = getDuration();
+    }
 }
-
  function sendInfo() {
+    if(curStrategie !== undefined){
+        mprisDto =  curStrategie.sendInfo(mprisDto);
+    }else {
+        var arrayLength = MultipleVideos.length;
+        if (arrayLength === 1) {
+            mprisDto.players = [{
+                name: "",
+                status: "",
+                title: "",
+                length: 0,
+                volume: 0,
+                currTime: 0,
+                id: "",
+                url: "",
+                ip: ""
+            }];
+            if (MyJasechvideo.lazyIrId === undefined || MyJasechvideo.lazyIrId === null || MyJasechvideo.lazyIrId === 0) {
+                MyJasechvideo.lazyIrId = Math.random() * (999999 - 1) + 1;
+            }
+            mprisDto.jsId = MyJasechvideo.lazyIrId;
+            mprisDto.players[0].currTime = getTime();
+            mprisDto.players[0].title = getTitle();
+            mprisDto.players[0].name = getTitle();
+            mprisDto.players[0].status = getStatus();
+            mprisDto.players[0].length = getDuration();
+            mprisDto.players[0].volume = getVolume();
+            mprisDto.players[0].id = MyJasechvideo.lazyIrId;
+            mprisDto.players[0].url = getPageUrl();
+            mprisDto.players[0].ip = getVideoSrc();
 
-     var arrayLength = MultipleVideos.length;
-    if(arrayLength === 1) {
-        if(MyJasechvideo.lazyIrId === undefined || MyJasechvideo.lazyIrId === null || MyJasechvideo.lazyIrId === 0)
-        MyJasechvideo.lazyIrId = Math.random() * (999999 - 1) + 1;
-        mprisDto.jsId =   MyJasechvideo.lazyIrId;
-        mprisDto.players[0].currTime =  getTime();
-        mprisDto.players[0].title = getTitle();
-        mprisDto.players[0].name = getTitle();
-        mprisDto.players[0].status = getStatus();
-        mprisDto.players[0].length = getDuration();
-        mprisDto.players[0].volume = getVolume();
-        mprisDto.players[0].id = MyJasechvideo.lazyIrId;
-        mprisDto.players[0].url = getPageUrl();
-        mprisDto.players[0].ip = getVideoSrc();
+        } else {
+            mprisDto.players = [];
+            for (var i = 0; i < arrayLength; i++) {
+                MyJasechvideo = MultipleVideos[i];
+                if (MyJasechvideo.lazyIrId === undefined || MyJasechvideo.lazyIrId === null || MyJasechvideo.lazyIrId === 0) {
+                    MyJasechvideo.lazyIrId = Math.random() * (999999 - 1) + 1;
+                }
+                var number = mprisDto.players.length;
+                var addNewBool = true;
+                mprisDto.jsId = MyJasechvideo.lazyIrId;
+                for (var c = 0; c < mprisDto.players.length; c++) {
+                    if (mprisDto.players[c].url === getPageUrl()) {
+                        if (mprisDto.players[c].length <= getDuration()) {
+                            number = c;
+                            addNewBool = false;
+                        } else {
+                            return;
+                        }
+                    }
+                }
+                if (addNewBool) {
+                    mprisDto.players.push({
+                        name: "",
+                        status: "",
+                        title: "",
+                        length: 0,
+                        volume: 0,
+                        currTime: 0,
+                        id: "",
+                        url: "",
+                        ip: ""
+                    });
+                }
+                mprisDto.players[number].currTime = getTime();
+                mprisDto.players[number].title = getTitle();
+                mprisDto.players[number].name = getTitle();
+                mprisDto.players[number].status = getStatus();
+                mprisDto.players[number].length = getDuration();
+                mprisDto.players[number].volume = getVolume();
+                mprisDto.players[number].id = MyJasechvideo.lazyIrId;
+                mprisDto.players[number].url = getPageUrl();
+                mprisDto.players[number].ip = getVideoSrc();
+            }
+            MyJasechvideo = MultipleVideos[0];
 
-    }else{
-        for (var i = 0; i < arrayLength; i++) {
-            MyJasechvideo = MultipleVideos[i];
-            if(MyJasechvideo.lazyIrId === undefined || MyJasechvideo.lazyIrId === null || MyJasechvideo.lazyIrId === 0)
-            MyJasechvideo.lazyIrId = Math.random() * (999999 - 1) + 1;
-            mprisDto.jsId =   MyJasechvideo.lazyIrId;
-            mprisDto.players[i].currTime =  getTime();
-            mprisDto.players[i].title = getTitle();
-            mprisDto.players[i].name = getTitle();
-            mprisDto.players[i].status = getStatus();
-            mprisDto.players[i].length = getDuration();
-            mprisDto.players[i].volume = getVolume();
-            mprisDto.players[i].id = MyJasechvideo.lazyIrId;
-            mprisDto.players[i].url = getPageUrl();
-            mprisDto.players[i].ip = getVideoSrc();
         }
-        MyJasechvideo = MultipleVideos[0];
     }
     NetworkPackage.data = mprisDto;
      var myJSON = JSON.stringify(NetworkPackage);
@@ -283,14 +411,6 @@ function sendNext() {
 
  function getPageUrl() {
      return MyJasechvideo.baseURI;
- }
-
-function sendTitle() {
-  //  document.title;
-}
-
- function sendVolume() {
-
  }
 
  function getTitle() {
@@ -313,38 +433,41 @@ function getDuration()
     return MyJasechvideo.duration;
 }
 
-function setTime(sec)
-{
-    MyJasechvideo.currentTime = sec;
+function setTime(sec) {
+    if(curStrategie !== undefined){
+        curStrategie.setTime(sec);
+    }else {
+        MyJasechvideo.currentTime = sec;
+    }
 }
 
 function setVolume(vol) {
-  MyJasechvideo.volume = vol;
+    if(curStrategie !== undefined){
+        curStrategie.setVolume(vol)
+    }else {
+        MyJasechvideo.volume = vol;
+    }
 }
 
 
 function pause() {
-    MyJasechvideo.pause();
+    if(curStrategie !== undefined){
+        curStrategie.pause();
+    }else {
+        MyJasechvideo.pause();
+    }
 }
 
 function play() {
-    MyJasechvideo.play();
+    if(curStrategie !== undefined){
+        curStrategie.play();
+    }else {
+        MyJasechvideo.play();
+    }
 }
 
 function getTime() {
     return MyJasechvideo.currentTime;
-}
-
-
-
-
-function youtubePageChange()
-{
-    $('body').on('transitionend', function(event)
-    {
-        if (event.target.id !== 'progress') return false;
-        init();
-    });
 }
 
 var NetworkPackage ={
@@ -354,9 +477,7 @@ var NetworkPackage ={
     type : "",
     isModule : false,
     data : null
-}
-
-
+};
 var mprisDto = {
     command : "",
     player: "",
@@ -381,4 +502,7 @@ var mprisDto = {
         }
     ]
 };
+
+
+
 
