@@ -20,8 +20,8 @@
         "*://*/*"
       ],    "js": ["jquery.min.js","popup.js"]
 ,
-  "all_frames": true,
-"run_at": "document_end"   }
+  "all_frames": false,
+"run_at": "document_idle"   }
   ]
 ,
  "background":

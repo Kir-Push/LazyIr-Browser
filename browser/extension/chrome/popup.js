@@ -196,6 +196,7 @@ var jasechIntervalId;
 var pingId;
 var pingInterval = 1000;
 var setted;
+var started = false;
 
 var strategies = new Object();
 strategies['open.spotify.com'] = new spotify();
@@ -205,7 +206,6 @@ var curStrategie;
 function setCheckServerInterval() {
     if(jasechResponse === true)
         return;
-
     clearInterval(jasechIntervalId);
     jasechIntervalId = setInterval(function() {
         if(workthroughbackhround !== true)
@@ -221,13 +221,11 @@ function setCheckServerInterval() {
 }
 
 var onopen = function() {
-
     jasechResponse = true;
     workthroughbackhround = false;
 };
 
 var onclose = function(event) {
-
     jasechResponse = false;
     jasechsocket.close();
     jasechsocket = undefined;
@@ -261,7 +259,7 @@ var onerror = function(error) {
 
 
 // receive message from server
-var onmg = function(event) {
+var onMessageFromServer = function(event) {
     var incomingMessage = event.data;
     parseResponse(incomingMessage);
 };
@@ -286,7 +284,7 @@ var connectingPeople = function () {
         jasechsocket.onclose = onclose;
         jasechsocket.onopen = onopen;
         jasechsocket.onerror = onerror;
-        jasechsocket.onmessage = onmg;
+        jasechsocket.onmessage = onMessageFromServer;
     }
 };
 
@@ -333,9 +331,10 @@ function checkServer() {
     }
 }
 
-init();
-
-function init() {
+ initLazyExtension();
+ 
+function initLazyExtension() {
+    started = true;
     checkServer();
     setCheckServerInterval();
 }
@@ -462,7 +461,7 @@ function sendNext() {
                             number = c;
                             addNewBool = false;
                         } else {
-                            return;
+                            break;
                         }
                     }
                 }
